@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "Ggc6xzc0hlltWjvrucpDER2iHfFSeBTWx5LnCqCqScJ9Q0IoW4VY8AET8j61kbp1rkvt1gg6n7bUrV7hp2WFVA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\cojat\\Documents\\GitHub\\discordBot\\discordBot.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\cojat\\.nuget\\packages\\dsharpplus\\5.0.0-nightly-01581\\dsharpplus.5.0.0-nightly-01581.nupkg.sha512",
+    "C:\\Users\\cojat\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\cojat\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
