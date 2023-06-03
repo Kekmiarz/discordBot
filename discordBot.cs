@@ -151,7 +151,7 @@ namespace discordBot
                             return;
 
                         case var temp when (message.ToLower().Contains("zezagi")):
-                            await eventLocal.Message.gRespondAsync("<@907719094592225350>");
+                            await eventLocal.Message.RespondAsync("<@907719094592225350>");
                             return;
                         default:
                             break;
