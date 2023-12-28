@@ -26,15 +26,21 @@ namespace discordBot
                 TokenType = TokenType.Bot,
                 Intents = DiscordIntents.All,
             });
+            Task dailyReminderTask = DailyReminder(discord);
+            Task papiezReminderTask = PapiezReminder(discord);
+            Task messageObserverTask = WatchForMessage(discord);
 
             await discord.ConnectAsync();
+
+            await Task.WhenAll(dailyReminderTask, papiezReminderTask, messageObserverTask);
+
             async Task DailyReminder(DiscordClient discordLocal)
-{
-                var guilds_created = await discord.GetGuildAsync(883768472427978812, null);
-                var channels = guilds_created.Channels;
+            {
+                var guildsCreated = await discord.GetGuildAsync(883768472427978812, null);
+                var channels = guildsCreated.Channels;
 
                 string message;
-                string message_replaced;
+                string messageReplaced;
 
                 DateTime currentDateTime = DateTime.Now;
 
@@ -42,22 +48,22 @@ namespace discordBot
 
                 string data = "data.txt";
 
-                string files_path = "..//discordBot//custom_files//";
+                string filesPath = "..//discordBot//custom_files//";
 
-                string file_read = File.ReadAllText(files_path + data);
+                string file_read = File.ReadAllText(filesPath + data);
                 if (file_read != formattedDateTime)
                 {
-                    File.WriteAllText(files_path + data, formattedDateTime);
+                    File.WriteAllText(filesPath + data, formattedDateTime);
 
-                    Console.WriteLine(File.ReadAllText(files_path + data));
+                    Console.WriteLine(File.ReadAllText(filesPath + data));
 
                     foreach (var kanal in channels)
                     {
                         if (kanal.Value.Name.Contains("daily-reminder"))
                         {
                             message = kanal.Value.Name;
-                            message_replaced = message.Replace('-', ' ');
-                            await discordLocal.SendMessageAsync(await discordLocal.GetChannelAsync(kanal.Key), "@everyone " + message_replaced);
+                            messageReplaced = message.Replace('-', ' ');
+                            await discordLocal.SendMessageAsync(await discordLocal.GetChannelAsync(kanal.Key), "@everyone " + messageReplaced);
                             Console.WriteLine(await discordLocal.GetChannelAsync(kanal.Key) + " " + DateTime.Now.ToShortTimeString());
                             await Task.Delay(2500);
                         }
@@ -69,24 +75,42 @@ namespace discordBot
                     Console.WriteLine("Daily remindery aktualne");
                 return;
             }
-            async Task papiez_reminder(DiscordClient discordLocal)
+            async Task PapiezReminder(DiscordClient discordLocal)
             {
+                var messageBuilder = new DiscordMessageBuilder();
+
                 DiscordChannel papiezawka = await discordLocal.GetChannelAsync(1112102955181674607);
+                Console.WriteLine("kys");
+                string relativePath = "custom_files/attachments/papiez/papiez1.gif";
+                string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "..", relativePath);
+                if (File.Exists(relativePath))
+                {
+                    using (FileStream fileStream = new FileStream(relativePath, FileMode.Open, FileAccess.Read))
+                    {
+                        messageBuilder.AddFile(fileStream);
+                        var time = DateTime.Now;
+                        DateTime papiez = new DateTime(time.Year, time.Month, time.Day, 21, 37, 0);
 
-                string papiezFile = @"C:\Users\cojat\Documents\repki\discord_bot\ConsoleApp1\pliki_pomocnicze\papiez.txt";
-                string papiezMessage = File.ReadAllText(papiezFile);
+                        DateTime timeHandler = new DateTime(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
 
-                var time = DateTime.Now;
-                DateTime papiez = new DateTime(time.Year, time.Month, time.Day, 21, 37, 00);
+                        int until_papiez = (int)(papiez - timeHandler).TotalMilliseconds;
+                        Console.WriteLine(until_papiez);
+                        await Task.Delay(until_papiez);
+                        await messageBuilder.SendAsync(papiezawka);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("File does not exist.");
+                }
 
-                DateTime timeHandler = new DateTime(time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second + 0);
 
-                int until_papiez = (int)(papiez - timeHandler).TotalMilliseconds;
-
-                await Task.Delay(until_papiez);
-                await discordLocal.SendMessageAsync(papiezawka, papiezMessage);
             }
-            async Task messageListener(DiscordClient discordLocal, MessageCreateEventArgs eventLocal)
+            async Task WatchForMessage(DiscordClient discordLocal)
+            {
+                discordLocal.MessageCreated += async (discordLocal, eventLocal) => await MessageListener(discordLocal, eventLocal);
+            }
+            async Task MessageListener(DiscordClient discordLocal, MessageCreateEventArgs eventLocal)
             {
                 ulong[] blacklist = { 897941922105163776, 703133081254756425, 614140239606317066 }; //id botow 
 
@@ -94,9 +118,9 @@ namespace discordBot
                 string cur_file;
 
                 string message = eventLocal.Message.Content;
-                string respond_message;
+                string respondMessage;
                 DiscordChannel cur_channel;
-                
+
                 if (!blacklist.Contains(eventLocal.Message.Author.Id))
                 {
                     cur_channel = eventLocal.Message.Channel;
@@ -123,8 +147,8 @@ namespace discordBot
                             return;
                         case var temp when (message.ToLower().StartsWith("jm")):
                             cur_file = "jm.txt";
-                            respond_message = File.ReadAllText(files_path + cur_file);
-                            await discordLocal.SendMessageAsync(cur_channel, respond_message);
+                            respondMessage = File.ReadAllText(files_path + cur_file);
+                            await discordLocal.SendMessageAsync(cur_channel, respondMessage);
                             break;
 
                         case var temp when (message.ToLower().StartsWith("!list")):
@@ -133,8 +157,8 @@ namespace discordBot
 
                         case var temp when (message.ToLower().Contains("1989")):
                             cur_file = "tiananmen.txt";
-                            respond_message = File.ReadAllText(files_path + cur_file);
-                            await discordLocal.SendMessageAsync(cur_channel, respond_message);
+                            respondMessage = File.ReadAllText(files_path + cur_file);
+                            await discordLocal.SendMessageAsync(cur_channel, respondMessage);
                             return;
 
                         case var temp when (message.ToLower().Contains("😎")):
@@ -142,10 +166,10 @@ namespace discordBot
                             return;
 
                         case var temp when (message.ToLower().Contains("cockstein")):
-                                cur_file = "cockstein.txt";
-                                respond_message = File.ReadAllText(files_path + cur_file);
-                                await discordLocal.SendMessageAsync(cur_channel, respond_message);
-                                return;
+                            cur_file = "cockstein.txt";
+                            respondMessage = File.ReadAllText(files_path + cur_file);
+                            await discordLocal.SendMessageAsync(cur_channel, respondMessage);
+                            return;
 
                         case var temp when (message.ToLower().Contains("wot")):
                             await eventLocal.Message.RespondAsync(":poop:");
@@ -159,9 +183,6 @@ namespace discordBot
                     }
                 }
             }
-            papiez_reminder(discord);
-            discord.MessageCreated += async(discordLocal, eventLocal) => await messageListener(discordLocal, eventLocal);
-            await DailyReminder(discord);
             await Task.Delay(-1);
         }
     }

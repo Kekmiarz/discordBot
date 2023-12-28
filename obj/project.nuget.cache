@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "Oyv7yCtSqx1ycOvy4MqVF6bWyRM9gqd/T1UPQ5rJNm4A1YsEgD0et91KuQRDOQ2clVmSArppN//90mrh1skPkQ==",
+  "dgSpecHash": "z7E4GnKa65NTO0Be9XOdcXe9VTEujiUX4TGKIxUvhOBceVzMpVSm71qefrJcguLs8X8CtlnPDXHtdVc76K0Bxw==",
   "success": true,
   "projectFilePath": "/home/cockstein/Documents/GitHub/DC-BOT/discordBot/discordBot.csproj",
   "expectedPackageFiles": [
     "/home/cockstein/.nuget/packages/dsharpplus/5.0.0-nightly-01581/dsharpplus.5.0.0-nightly-01581.nupkg.sha512",
     "/home/cockstein/.nuget/packages/microsoft.extensions.logging.abstractions/7.0.0/microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
     "/home/cockstein/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
-    "/home/cockstein/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.13/microsoft.aspnetcore.app.ref.7.0.13.nupkg.sha512"
+    "/home/cockstein/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.0/microsoft.aspnetcore.app.ref.8.0.0.nupkg.sha512"
   ],
   "logs": []
 }

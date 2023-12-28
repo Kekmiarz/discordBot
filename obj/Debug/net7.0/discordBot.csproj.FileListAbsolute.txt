@@ -36,3 +36,4 @@ C:/Users/cojat/Documents/GitHub/discordBot/obj/Debug/net7.0/ref/discordBot.dll
 /home/cockstein/Documents/GitHub/DC-BOT/discordBot/obj/Debug/net7.0/discordBot.pdb
 /home/cockstein/Documents/GitHub/DC-BOT/discordBot/obj/Debug/net7.0/discordBot.genruntimeconfig.cache
 /home/cockstein/Documents/GitHub/DC-BOT/discordBot/obj/Debug/net7.0/ref/discordBot.dll
+/home/cockstein/Documents/GitHub/DC-BOT/discordBot/obj/Debug/net7.0/discordBot.sourcelink.json
