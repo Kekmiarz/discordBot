@@ -42,7 +42,7 @@ namespace discordBot
 
                 string data = "data.txt";
 
-                string files_path = @"C:\Users\cojat\Documents\repki\discord_bot\ConsoleApp1\pliki_pomocnicze\";
+                string files_path = "..//discordBot//custom_files//";
 
                 string file_read = File.ReadAllText(files_path + data);
                 if (file_read != formattedDateTime)
@@ -96,6 +96,7 @@ namespace discordBot
                 string message = eventLocal.Message.Content;
                 string respond_message;
                 DiscordChannel cur_channel;
+                
                 if (!blacklist.Contains(eventLocal.Message.Author.Id))
                 {
                     cur_channel = eventLocal.Message.Channel;
